@@ -1,0 +1,26 @@
+## c. WMO-CF Extensions
+
+### Definitions
+
+*CF Conventions.* The NetCDF Climate and Forecast (CF) Metadata Conventions (CF Conventions) define a minimum set of metadata required to ensure that conforming netCDF files meet a basic level of self-description and interoperability. The required (minimal) set of metadata ensures that all variables in a dataset have “an associated description of what it represents, including physical units if appropriate, and that each value can be located in space (relative to earth-based coordinates) and time”. Additional metadata are defined by the CF Conventions but are only recommended where they may not be needed or appropriate for all datasets.
+
+Current and previous versions of the CF Conventions can be found at: https://cfconventions.org/[https://cfconventions.org/.]
+
+*WMO-CF Extensions.* The WMO-CF Extensions build on the CF Conventions to provide the framework for standardizing semantics and metadata, further reducing the effort involved in specifying data products and increasing interoperability. 
+
+The WMO-CF Extensions:
+
+• Define additional metadata requirements or recommendations that are not defined by the CF Conventions;
+
+• Specify the set of optional CF Conventions metadata that each extension requires, making those optional metadata mandatory.
+
+*WMO-CF Profiles.* The WMO-CF Profiles implement the WMO-CF Extensions for different data types by, inter alia: defining the standardized metadata and semantics; specifying the names of dimension and coordinate variables; and specifying the ordering of dimensions. The WMO-CF Profiles reduce the degrees of freedom available when creating netCDF files, increasing the standardization of data from different publishers for the same type of data.
+
+### FM SYSTEM OF WMO-CF PROFILES
+
+[width="100%",cols="30%,70%",]
+|===
+|FM 301-2022 WMO-CF Radial |Reports from operational weather radar
+|FM 302-2022 + WMO-CF Marine Trajectory |Profile for the representation of meteorological/oceanographic observations along a trajectory within the ocean (or other body of water) or at/near the ocean surface. 
+||_Note: Example observing platforms include, inter alia: crewed vessels making observations at the sea surface along a track; autonomous surface vehicles making similar measurements; and oceanographic gliders making measurements along a track._
+|===

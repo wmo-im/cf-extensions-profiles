@@ -1,0 +1,153 @@
+## FM 302-2022 WMO-CF MARINE TRAJECTORY
+
+### Regulations
+
+[width="100%",cols="15%,85%",grid=none,frame=none]
+|===
+|*302.1*|*Scope*
+|302.1.1 |This profile is intended for the reporting of meteorological and/or oceanographic observations along one or more trajectories, including both at or near the ocean surface and at depth, from a single platform. The trajectory may follow an undulating profile.
+|302.1.2 |A ragged array representation is used to allow multiple trajectories to be reported (for example, see CF Conventions v1.8). This may be either a contiguous or indexed ragged array.
+|302.1.3 |Only data for a single platform shall be included in the file.
+|302.1.4 |Groups are not supported in this profile and groups other than the root group shall not be used.
+|===
+
+[width="100%",cols="15%,85%",grid=none,frame=none]
+|===
+
+|*302.2* |*Global scope/root group*
+|302.2.1 |_Global attributes_
+|302.2.1.1 |The regulations defined in General Regulation WMO-CF.6 for global attributes shall apply.
+|302.2.1.2 |Table 302-1 lists the values to be used for the indicated attributes.
+|302.2.2 |_Station/platform identifier_
+|302.2.2.1 |The rules for station identifiers (WMO-CF.4.5, WMO-CF.4.6, + WMO-CF.6.10.6 and WMO-CF.6.10.7) shall be observed.
+|302.2.3 |_Dimensions_
+|302.2.3.1 |Files containing marine profile trajectory data shall have the following dimensions:
+|302.2.3.1.1 |`+obs+`, the `+obs+` dimension shall be used to indicate the total number of observations within the file.
+|302.2.3.1.2 |`+trajectory+`, the `+trajectory+` dimension shall be used to indicate the number of trajectories contained in the file and to index the observations to a trajectory. When there is a single trajectory in the file this shall have dimension 1. 
+|302.2.4 |_Coordinate Variables_
+|302.2.4.1 |Table 302-2 lists the coordinate variables that shall be used with this profile. 
+|302.2.4.2 |For platforms located at the sea surface the depth shall be given as zero.
+|302.2.4.3 |The observation locations relative to the sea surface shall then be given by the sensor installation height (`+/<measurand_short_name>_<n>_sensor_installed_height+`) variable. See Regulation 302.2.7.4. 
+|302.2.5 |_Trajectory identification_
+|302.2.5.1 |Table 302-3 lists the variables that shall be used to identify the trajectory that an observation belongs to. 
+|302.2.5.2 |`+trajectory+` provides the identifier for a trajectory. 
+|302.2.5.3 |`+trajectory_index+` provides the trajectory that an observation belongs to. 
+|302.2.6 |_Data variables_
+ |302.2.6.1 |The general regulations for data variables, including mandatory attributes, defined in General Regulation WMO-CF.5 shall apply. 
+|302.2.6.2 |Only data variables with a valid `+standard_name_+` shall be included. 
+|302.2.6.3 |Data variables shall have a single dimension `+_obs_+`. 
+|302.2.6.4 |The NetCDF variable name shall be interpreted as the short name for the variable. 
+|302.2.6.5 |Multiple variables sharing the same short name shall follow the following naming convention: `+<measurand_short_name>_<n>+`, where `+<n>+` is incremented for each additional variable sharing the same short name. For example,`+salinity_1+` and `+salinity_2+` in the case of two salinity sensors on an observing platform. 
+|302.2.6.6 |The `+trajectory_index+` variable shall be used to indicate which trajectory an observation belongs to. 
+|302.2.7 |_Ancillary variables_ 
+|302.2.7.1 |The naming of the ancillary variables shall take the form `+<measurand_short_name>_<n>_<ancillary_variable>+`. 
+|302.2.7.2 |Table 302-4 lists the mandatory ancillary variables that shall be reported for each observed/measured variable. 
+|302.2.7.3 |Table 302-5 lists the conditional or optional ancillary variables defined for the observed/measured variables. 
+|302.2.7.4 |The installed height of a sensor shall be included when the sensor is not at the same depth (or height) specified by the depth variable. In this case the sensor depth (or height) relative to the sea surface shall be given by the installed height added to the depth. 
+|===
+
+
+### FM 302-2022 tables
+
+*Table 302-1. Values that shall be used for the indicated global attributes*
+
+[width="100%",cols="38%,15%,47%",options="header",]
+|===
+|Attribute name |Type |Value
+|Conventions |string |"CF-1.8, WMO CF-1.0"
+|wmo__cf_profile |string |"FM 302-2022"
+|featureType |string |"trajectory"
+|===
+
+*Table 302-2a. Coordinate variables that shall be used in the marine trajectory profile (attributes are given in Table 302-2b)*
+
+[width="100%",cols="19%,13%,18%,50%",options="header",]
+|===
+|Variable path/name |Dimensions |Type |Comments
+|/lat |(obs) |float or double |Latitude of the observations 
+|/lon |(obs) |float or double |Longitude of the observations 
+|/depth |(obs) |float or double |Vertical position of the observing station or platform relative to sea level, for example glider depth 
+|/time |(obs) |float or double |Date and time of the observation
+|===
+
+*Table 302-2b. Attributes defined for the coordinate variables given in Table 302-2a*
+
+[width="100%",cols="18%,20%,10%,52%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/lat |standard_name |string |latitude 
+| |units |string |degrees_north 
+| |axis |string |Y 
+|/lon |standard_name |string |longitude
+| |units |string |degrees_east
+| |axis |string |X
+|/depth |standard_name |string |depth
+| |units |string |metres
+| |axis |string |Z
+| |positive |string |down
+| |long_name |string |depth_below_sea_level
+|/time |standard_name |string |time
+| |units |string |"seconds since <reftime>" where <reftime> is an ISO8601 time string of the form YYYY-MM-DDThh:mm:ssZ 
+| |axis |string |T 
+| |calendar |string |standard
+|===
+
+*Table 302-3a. Variables defined to identify the trajectory an observation belongs to and that shall be included in marine trajectory files (attributes are listed in Table 302-3b)*
+
+[width="100%",cols="25%,14%,8%,53%",options="header",]
+|===
+|Variable path/name |Dimensions |Type |Comments
+|/trajectory |(trajectory) |string |Identifier for trajectory 
+|/trajectory_index |(obs) |int |Index of the trajectory an observation belongs to
+|===
+
+*Table 302-3b. Attributes defined for the trajectory variables listed + in Table 302-3a*
+
+[width="100%",cols="23%,22%,9%,46%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/trajectory |cf_role |string |trajectory_id
+ |/trajectory_index |long_name |string |Index of the trajectory that this observation belongs to  | |instance_dimension |string |trajectory
+|===
+
+*Table 302-4a. Ancillary variables defined and that shall be reported for each measured/observed variable (attributes are given in Table 302-4b; + <prefix> has been used to represent <measurand_short_name>_<n>)* 
+
+[width="100%",cols="42%,15%,8%,35%",options="header",]
+|===
+|Variable path/name |Dimensions |Type |Comments
+|/<prefix>_sensor |(trajectory) |string |Name of sensor
+|/<prefix>_sensor_make |(trajectory) |string |Manufacturer of sensor 
+|/<prefix>_sensor_model |(trajectory) |string |Model of sensor 
+|/<prefix>_sensor_serial_number |(trajectory) |string |Sensor serial number
+/<prefix>_sensor_calibration_date |(trajectory) |float |Last calibration data of sensor 
+|===
+
+*Table 302-4b. Attributes for the ancillary variables defined in Table 302-4a (<prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="100%",cols="39%,17%,8%,36%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/<prefix>_sensor_calibration_date |standard_name |string |time 
+| |units |string |"seconds since <reftime>" where <reftime> is an ISO8601 time string of the form YYYY-MM-DDThh:mm:ssZ 
+| |axis |string |T 
+| |calendar |string |standard 
+|===
+
+*Table 302-5a. Conditional/optional ancillary variables defined and that should be reported for each measured/observed variable when the described conditions are met (attributes are given in Table 302-5b; + <prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="100%",cols="46%,13%,8%,33%",options="header",]
+|===
+|Variable path/name |Dimensions |Type |Comments
+|/<prefix>_sensor_installed_height |(trajectory) |float |Value to be added to sensor_depth to get vertical position of sensor relative to sea surface. 
+|/<prefix>_sensor_measurement_method |(trajectory) |string |The method used by the sensor to measure the parameter (for example, capacitive humidity sensor).
+|===
+
+*Table 302-5b. Attributes for the ancillary variables defined in Table 302-5a (<prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="99%",cols="51%,30%,9%,10%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/<prefix>_sensor_installed_height |units |string |metres
+|/<prefix>_sensor_measurement_method |wmo__parameter_name |string |
+| |wmo__parameter_uri |string |
+|===
