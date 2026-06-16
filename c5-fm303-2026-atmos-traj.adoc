@@ -118,7 +118,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 | |valid_min |float |0.0f - optional – replace with correct value
 | |valid_max |float |0.0f - optional – replace with correct value
 |/time |standard_name |string |"time"
-| |units |string |seconds since <reftime> where <reftime> is an ISO8601 time string of the form YYYY-MM-DDThh:mm:ssZ
+| |units |string |"seconds since <reftime>" where <reftime> is an ISO8601 time string of the form YYYY-MM-DDThh:mm:ssZ
 | |axis |string |"T"
 | |calendar |string |"standard"
 |===
@@ -137,7 +137,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 |===
 |Variable path/name |Attribute |Type |Value
 |/trajectory |cf_role |string |"trajectory_id"
-| |long_name |string |trajectory name
+| |long_name |string |"trajectory name"
 |===
 
 *Table 303-4a. Example geophysical variables. Dimensions shall be (obs) [single trajectory] or (trajectory, obs) [multiple trajectories]*
@@ -167,10 +167,10 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 [width="100%",cols="20%,22%,58%",options="header",]
 |===
 |Variable |Attribute |Description
-|geophysical variable 1 |standard_name |CF compliant standard name
+|geophysical variable |standard_name |CF compliant standard name
 | |units |CF compliant appropriate unit
 | |scale_factor |If the data uses a scale factor other than 1. The data type should be the data type of the variable.
-| |add_offset |If the data uses an add offset other than 0. The data type should be the data type of the variable.
+| |add_offset |If the data uses an add offset other than 0, The data type should be the data type of the variable.
 | |_FillValue |If there could be missing values in the data
 | |valid_min |0.0f - optional – replace with correct value
 | |valid_max |0.0f - optional – replace with correct value
@@ -217,7 +217,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 |===
 |Variable name |Attribute |Type |Value
 |/<prefix>_sensor_calibration_date |standard_name |string |"time"
-| |units |string |seconds since <reftime> where <reftime> is an ISO8601 time string of the form YYYYMMDDThh:mm:ss
+| |units |string |"seconds since <reftime>" where <reftime> is an ISO8601 time string of the form YYYYMMDDThh:mm:ss
 | |axis |string |"T"
 | |calendar |string |"standard"
 |===
