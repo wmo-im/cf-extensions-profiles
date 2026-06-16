@@ -1,0 +1,329 @@
+## FM 303-2026 WMO-CF ATMOSPHERIC TRAJECTORY
+
+### Regulations
+
+[width="100%",cols="15%,85%",grid=none,frame=none]
+|===
+|*303.1*|*Scope*
+|303.1.1 |This profile is intended for the reporting of meteorological, atmospheric chemistry and air quality observations along one or more trajectories from a single platform. The trajectory may follow an undulating profile.
+|303.1.2 |The data shall be stored as either a single timeseries for the entire flight/trajectory, or using a multidimensional array representation for multiple trajectories.
+|===
+_Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfconventions.html#trajectory-data for further information on the multidimensional array representation._
+
+[width="100%",cols="15%,85%",grid=none,frame=none]
+|===
+|303.1.3 |Only data for a single platform shall be included in the file.
+|303.1.4 |Groups are not supported in this profile and groups other than the root group shall not be used.
+|===
+
+[width="100%",cols="15%,85%",grid=none,frame=none]
+|===
+|*303.2* |*Global scope / root group*
+|303.2.1 |_Global attributes_
+|303.2.1.1 |The rules for global attributes from the general regulations shall apply.
+|303.2.1.2 |Table 303-1a lists the values that shall be used for the indicated mandatory attributes.
+|303.2.2 |_Station / platform identifier_
+|303.2.2.1 |The rules for station identifiers WMO-CF.4.5, WMO-CF.4.6, WMO-CF.6.10.6 and WMO-CF.6.10.7 shall be observed.
+|303.2.2.2 |Table 303-1b lists additional global attributes that should be used to further identify the platform or station making the observations.
+|303.2.3 |_Dimensions_
+|303.2.3.1 |Files containing atmospheric profile trajectory data shall have the following dimensions:
+|303.2.3.1.1 |`+obs+`, the `+obs+` dimension shall be used to indicate the total number of observations per trajectory within the file.
+|303.2.3.1.2 |`+trajectory+`, the `+trajectory+` dimension shall be used to indicate the number of trajectories contained in the file and to index the observations to a trajectory. When there is a single trajectory in the file this dimension can be omitted.
+|303.2.4 |_Coordinate Variables_
+|303.2.4.1 |Table 303-2 lists the coordinate variables that shall be used with this profile.
+|303.2.5 |_Trajectory identification_
+|303.2.5.1 |When storing multiple trajectories in the same file, the trajectory dimension provides the identifier for a trajectory, and the number of trajectories in the file. See example 2.
+|303.2.5.2 |Table 303-3 defines the variable and variable attributes that shall be used to identify the trajectories when more than one trajectory is included.
+|303.2.6 |_Data variables_
+|303.2.6.1 |The general regulations for data variables, including mandatory attributes, defined in regulation WMO-CF.5 shall apply.
+|303.2.6.2 |For files containing a single trajectory the data variables shall have a single dimension `+obs+`.
+|303.2.6.3 |For files containing multiple trajectories the data variables shall have two dimensions, `+trajectory+` followed by `+obs+`.
+|303.2.6.4 |The NetCDF variable names shall be interpreted as the short name for the variable.
+|303.2.6.5 |Table 303-4a provides a list of names that should be used for the indicated geophysical parameters reported.
+|303.2.6.6 |Table 303-4b provides guidance on the attributes for those variables.
+|303.2.6.7 |Multiple variables sharing the same short name shall follow the following naming convention: `+<measurement_short_name>_<n>+`, where `+<n>+` is incremented for each additional variable sharing the same short name. For example, `+humidity_1+` and `+humidity_2+` in the case of two humidity sensors on an observing platform.
+|303.2.6.8 |Table 303-5a provides a list of names that should be used for reporting the platform trajectory and orientation.
+|303.2.6.9 |_Ancillary variables_
+|303.2.6.10 |The naming of the ancillary variables shall take the form `+<measurement_short_name>_<n>_<ancillary_variable>+`.
+|303.2.6.11 |Table 303-7a lists the ancillary variables that should be reported for the observed / measured variables.
+|303.2.6.12 |Table 303-7b lists the attributes that shall be included for those ancillary variables when reported.
+|===
+
+
+### FM 303-2026 tables
+
+*Table 303-1a. Mandatory global attributes and required values*
+
+[width="100%",cols="38%,15%,47%",options="header",]
+|===
+|Global attribute |Type |Description / value
+|Conventions |string |"CF-1.8, WMO-CF-1.0"
+|wmo__cf_profile |string |"FM 303-2026"
+|featureType |string |"trajectory"
+|===
+
+*Table 303-1b. Recommended global attributes*
+
+[width="100%",cols="38%,62%",options="header",]
+|===
+|Global attribute |Description
+|platform_name |Name or non-WMO identifier of the platform(s) that supported the sensor data used to create this dataset or product
+|flight_id |Human-readable unique identifier for dataset
+|===
+
+*Table 303-2a. Coordinate variables that shall be used in the trajectory profile (attributes are given in Table 303-2b)*
+
+[width="100%",cols="15%,27%,18%,40%",options="header",]
+|===
+|Coordinate variable |Dimensions |Type (recommended) |Comments
+|/lat |(obs) [single trajectory] +
+(obs, trajectory) [multiple trajectories] |float |Latitude of the observations
+|/lon |(obs) [single trajectory] +
+(obs, trajectory) [multiple trajectories] |float |Longitude of the observations
+|/altitude |(obs) [single trajectory] +
+(obs, trajectory) [multiple trajectories] |any numeric |Vertical position of the platform relative to sea level, for example, altitude in meters above sea level
+|/pressure |(obs) [single trajectory] +
+(obs, trajectory) [multiple trajectories] |float (could also be int or double depending on precision) |Pressure level as an alternative to altitude above sea level (hPA)
+|/time |(obs) [single trajectory] +
+(obs, trajectory) [multiple trajectories] |double |Date and time of the observation
+|===
+
+*Table 303-2b. Attributes for the coordinate variables given in Table 303-2a*
+
+[width="100%",cols="15%,22%,10%,53%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/lat |standard_name |string |"latitude"
+| |units |string |"degrees_north"
+| |axis |string |"Y"
+| |valid_min |float |0.0f - optional – replace with correct value
+| |valid_max |float |0.0f - optional – replace with correct value
+|/lon |standard_name |string |"longitude"
+| |units |string |"degrees_east"
+| |axis |string |"X"
+| |valid_min |float |0.0f - optional – replace with correct value
+| |valid_max |float |0.0f - optional – replace with correct value
+|/altitude |standard_name |string |"altitude"
+| |units |string |"km"
+| |axis |string |"Z"
+| |positive |string |"up"
+| |long_name |string |"altitude_above_sea_level"
+| |valid_min |float |0.0f - optional – replace with correct value
+| |valid_max |float |0.0f - optional – replace with correct value
+|/pressure |standard_name |string |"pressure"
+| |units |string |"Pa"
+| |axis |string |"Z"
+| |positive |string |"up"
+| |long_name |string |"air_pressure"
+| |valid_min |float |0.0f - optional – replace with correct value
+| |valid_max |float |0.0f - optional – replace with correct value
+|/time |standard_name |string |"time"
+| |units |string |seconds since <reftime> where <reftime> is an ISO8601 time string of the form YYYY-MM-DDThh:mm:ssZ
+| |axis |string |"T"
+| |calendar |string |"standard"
+|===
+
+*Table 303-3a. Variables defined to identify the trajectory an observation belongs to and that shall be included in atmospheric trajectory files (attributes are listed in Table 303-3b)*
+
+[width="100%",cols="25%,14%,8%,53%",options="header",]
+|===
+|Variable path/name |Dimensions |Type |Comments
+|/trajectory |(trajectory) |string |Identifier for trajectory
+|===
+
+*Table 303-3b. Attributes for the trajectory variables listed in Table 303-3a*
+
+[width="100%",cols="25%,22%,9%,44%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/trajectory |cf_role |string |"trajectory_id"
+| |long_name |string |trajectory name
+|===
+
+*Table 303-4a. Example geophysical variables. Dimensions shall be (obs) [single trajectory] or (trajectory, obs) [multiple trajectories]*
+
+[width="100%",cols="55%,20%,25%",options="header",]
+|===
+|Variable |Type |Value / units
+|air_temperature |float or double |K
+|air_pressure |float or double |Pa
+|elapsed_time |float or double |s
+|relative_humidity |float or double |%
+|dew_point_temperature |float or double |K
+|humidity_mixing_ratio |float or double |kg kg^-1^
+|wind_speed |float or double |m s^-1^
+|wind_direction |float or double |degree
+|y_wind |float or double |m s^-1^ (positive north)
+|x_wind |float or double |m s^-1^ (positive east)
+|vertical_wind_component |float or double |m s^-1^ (positive up)
+|upward_air_velocity |float or double |m s^-1^
+|turbulent_kinetic_energy |float or double |m^2^ s^-2^
+|eddy_dissipation_rate |float or double |m^2/3^ s^-1^
+|cloud_liquid_water_mixing_ratio |float or double |kg kg^-1^
+|===
+
+*Table 303-4b. Example attributes for each geophysical variable*
+
+[width="100%",cols="20%,22%,58%",options="header",]
+|===
+|Variable |Attribute |Description
+|geophysical variable 1 |standard_name |CF compliant standard name
+| |units |CF compliant appropriate unit
+| |scale_factor |If the data uses a scale factor other than 1. The data type should be the data type of the variable.
+| |add_offset |If the data uses an add offset other than 0. The data type should be the data type of the variable.
+| |_FillValue |If there could be missing values in the data
+| |valid_min |0.0f - optional – replace with correct value
+| |valid_max |0.0f - optional – replace with correct value
+| |coordinates |e.g., "time lat lon z"
+| |instrument_variable |Refers to name of variable containing information on the instrument from which this variable was collected.
+| |platform_variable |Refers to name of variable containing information on the platform from which this variable was collected.
+| |ancillary_variables |Identify the variable name(s) of the flag(s) and other ancillary variables relevant to this variable. Use a space-separated list.
+|===
+
+*Table 303-5a. Example platform variables. Dimensions shall be (obs) [single trajectory] or (trajectory, obs) [multiple trajectories]*
+
+[width="100%",cols="55%,20%,25%",options="header",]
+|===
+|Variable |Type |Value / units
+|platform_pitch |float or double |degree
+|platform_pitch_rate |float or double |degree s^-1^
+|platform_yaw |float or double |degree
+|platform_yaw_rate |float or double |degree s^-1^
+|platform_roll |float or double |degree
+|platform_roll_rate |float or double |degree s^-1^
+|platform_speed_wrt_ground |float or double |m s^-1^
+|platform_course |float or double |degree
+|platform_speed_wrt_air |float or double |m s^-1^
+|platform_speed_wrt_ground_upward |float or double |m s^-1^
+|platform_eastward_ground_speed |float or double |m s^-1^
+|platform_northward_ground_speed |float or double |m s^-1^
+|===
+
+*Table 303-6a. Conditional/ancillary variables that should be reported for each measured/observed variable (attributes are given in Table 303-6b; <prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="100%",cols="42%,8%,50%",options="header",]
+|===
+|Variable name |Type |Comments
+|/<prefix>_sensor |string |Name of sensor
+|/<prefix>_sensor_make |string |Manufacturer of sensor
+|/<prefix>_sensor_model |string |Model of sensor
+|/<prefix>_sensor_serial_number |string |Sensor serial number
+|/<prefix>_sensor_calibration_date |string |Last calibration date of sensor
+|===
+
+*Table 303-6b. Attributes for the ancillary variables defined in Table 303-6a (<prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="100%",cols="39%,22%,9%,30%",options="header",]
+|===
+|Variable name |Attribute |Type |Value
+|/<prefix>_sensor_calibration_date |standard_name |string |"time"
+| |units |string |seconds since <reftime> where <reftime> is an ISO8601 time string of the form YYYYMMDDThh:mm:ss
+| |axis |string |"T"
+| |calendar |string |"standard"
+|===
+
+*Table 303-7a. Conditional/optional ancillary variables defined and that should be reported for each measured/observed variable when the described conditions are met (attributes are given in Table 303-7b; <prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="100%",cols="46%,8%,46%",options="header",]
+|===
+|Variable path/name |Type |Comments
+|/<prefix>_sensor_installed_height |float |Value to be added to sensor_height to get vertical position of sensor relative to ground level
+|/<prefix>_sensor_measurement_method |string |The method used by the sensor to measure the parameter, e.g. "capacitive humidity sensor"
+|===
+
+*Table 303-7b. Attributes for the ancillary variables defined in Table 303-7a (<prefix> has been used to represent <measurand_short_name>_<n>)*
+
+[width="100%",cols="46%,25%,9%,20%",options="header",]
+|===
+|Variable path/name |Attribute |Type |Value
+|/<prefix>_sensor_installed_height |units |string |"meters"
+|/<prefix>_sensor_measurement_method |wmo__parameter_name |string |
+| |wmo__parameter_uri |string |
+|===
+
+
+### FM 303-2026 examples
+
+*Example 1: A single trajectory recording temperature and relative humidity*
+
+[source]
+----
+dimensions:
+    obs = 42;
+variables:
+    double time(obs) ;
+        time:standard_name = "time";
+        time:long_name = "time" ;
+        time:units = "days since 1970-01-01 00:00:00" ;
+    float lon(obs) ;
+        lon:standard_name = "longitude";
+        lon:long_name = "longitude" ;
+        lon:units = "degrees_east" ;
+    float lat(obs) ;
+        lat:standard_name = "latitude";
+        lat:long_name = "latitude" ;
+        lat:units = "degrees_north" ;
+    float z(obs) ;
+        z:standard_name = "altitude";
+        z:long_name = "height above mean sea level" ;
+        z:units = "km" ;
+        z:positive = "up" ;
+        z:axis = "Z" ;
+    float temp(obs) ;
+        temp:standard_name = "air_temperature";
+        temp:long_name = "bulk temperature of the air" ;
+        temp:units = "K" ;
+        temp:coordinates = "time lon lat z" ;
+    float rh(obs) ;
+        rh:standard_name = "relative_humidity";
+        rh:long_name = "relative humidity – percentage water vapour content of air" ;
+        rh:units = "%" ;
+        rh:coordinates = "time lon lat z" ;
+attributes:
+    :featureType = "trajectory";
+----
+
+*Example 2: Trajectories recording temperature and relative humidity in a multidimensional array representation*
+
+[source]
+----
+dimensions:
+    obs = 1000 ;
+    trajectory = 12 ;
+variables:
+    string trajectory(trajectory) ;
+        trajectory:cf_role = "trajectory_id";
+        trajectory:long_name = "trajectory name" ;
+    int trajectory_info(trajectory) ;
+        trajectory_info:long_name = "some kind of trajectory info"
+    double time(trajectory, obs) ;
+        time:standard_name = "time";
+        time:long_name = "time" ;
+        time:units = "days since 1970-01-01 00:00:00" ;
+    float lon(trajectory, obs) ;
+        lon:standard_name = "longitude";
+        lon:long_name = "longitude" ;
+        lon:units = "degrees_east" ;
+    float lat(trajectory, obs) ;
+        lat:standard_name = "latitude";
+        lat:long_name = "latitude" ;
+        lat:units = "degrees_north" ;
+    float z(trajectory, obs) ;
+        z:standard_name = "altitude";
+        z:long_name = "height above mean sea level" ;
+        z:units = "km" ;
+        z:positive = "up" ;
+        z:axis = "Z" ;
+    float temp(trajectory, obs) ;
+        temp:standard_name = "air_temperature";
+        temp:long_name = "bulk temperature of the air" ;
+        temp:units = "K" ;
+        temp:coordinates = "time lon lat z" ;
+    float rh(trajectory, obs) ;
+        rh:standard_name = "relative_humidity";
+        rh:long_name = "relative humidity – percentage water vapour content of air" ;
+        rh:units = "%" ;
+        rh:coordinates = "time lon lat z" ;
+attributes:
+    :featureType = "trajectory";
+----
