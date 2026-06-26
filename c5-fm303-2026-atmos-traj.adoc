@@ -68,7 +68,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 |===
 |Global attribute |Description
 |platform_name |Name or non-WMO identifier of the platform(s) that supported the sensor data used to create this dataset or product
-|platform_type |Type of platform upon which the radar system is mounted 
+|platform_type |Type of platform upon which the sensor used to create this dataset was mounted on 
 |flight_id |Human-readable unique identifier for dataset
 |===
 
