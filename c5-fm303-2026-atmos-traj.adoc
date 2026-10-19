@@ -84,7 +84,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 |/altitude |(obs) [single trajectory] +
 (obs, trajectory) [multiple trajectories] |any numeric |Vertical position of the platform relative to sea level, for example, altitude in meters above sea level
 |/pressure |(obs) [single trajectory] +
-(obs, trajectory) [multiple trajectories] |float (could also be int or double depending on precision) |Pressure level as an alternative to altitude above sea level (hPA)
+(obs, trajectory) [multiple trajectories] |float (could also be int or double depending on precision) |Pressure level as an alternative to altitude above sea level (Pa)
 |/time |(obs) [single trajectory] +
 (obs, trajectory) [multiple trajectories] |double |Date and time of the observation
 |===
@@ -105,7 +105,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 | |valid_min |float |0.0f - optional – replace with correct value
 | |valid_max |float |0.0f - optional – replace with correct value
 |/altitude |standard_name |string |"altitude"
-| |units |string |"km"
+| |units |string |"m"
 | |axis |string |"Z"
 | |positive |string |"up"
 | |long_name |string |"altitude_above_sea_level"
@@ -114,7 +114,7 @@ _Note: See https://cfconventions.org/Data/cf-conventions/cf-conventions-1.9/cfco
 |/pressure |standard_name |string |"pressure"
 | |units |string |"Pa"
 | |axis |string |"Z"
-| |positive |string |"up"
+| |positive |string |"down"
 | |long_name |string |"air_pressure"
 | |valid_min |float |0.0f - optional – replace with correct value
 | |valid_max |float |0.0f - optional – replace with correct value
@@ -264,12 +264,12 @@ variables:
         lat:standard_name = "latitude";
         lat:long_name = "latitude" ;
         lat:units = "degrees_north" ;
-    float z(obs) ;
-        z:standard_name = "altitude";
-        z:long_name = "height above mean sea level" ;
-        z:units = "km" ;
-        z:positive = "up" ;
-        z:axis = "Z" ;
+    float altitude(obs) ;
+        altitude:standard_name = "altitude";
+        altitude:long_name = "height above mean sea level" ;
+        altitude:units = "m" ;
+        altitude:positive = "up" ;
+        altitude:axis = "Z" ;
     float temp(obs) ;
         temp:standard_name = "air_temperature";
         temp:long_name = "bulk temperature of the air" ;
@@ -297,7 +297,7 @@ variables:
         trajectory:long_name = "trajectory name" ;
     int trajectory_info(trajectory) ;
         trajectory_info:long_name = "some kind of trajectory info"
-    double time(trajectory, obs) ;
+    double time(obs,trajectory) ;
         time:standard_name = "time";
         time:long_name = "time" ;
         time:units = "days since 1970-01-01 00:00:00" ;
