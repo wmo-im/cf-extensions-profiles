@@ -137,10 +137,10 @@ not supported by this profile)
 |===
 |Attribute name |Type |Convention |Value or description
 |site_name |string |CF/Radial |Name of site where data were gathered.
-|Scan_name |string |CF/Radial |Name of scan strategy used, if applicable.
-|Scan_id |int |CF/Radial |Scan strategy id, if applicable. Assumed 0 if missing.
-|Ray_times_increase |Boolean |CF/Radial |“true” or “false”. Set to true if ray times increase monotonically throughout all of the sweeps in the volume.
-|Simulated |Boolean |ODIM |“true” or “false”. Set to true if data in this file are simulated.
+|scan_name |string |CF/Radial |Name of scan strategy used, if applicable.
+|scan_id |int |CF/Radial |Scan strategy id, if applicable. Assumed 0 if missing.
+|ray_times_increase |Boolean |CF/Radial |“true” or “false”. Set to true if ray times increase monotonically throughout all of the sweeps in the volume.
+|simulated |Boolean |ODIM |“true” or “false”. Set to true if data in this file are simulated.
 |===
 
 *Table 301-4a. Metadata variables with global scope that shall be included in WMO-CF Radial files (units and other attributes are defined in Table 301-4b)*
@@ -182,7 +182,7 @@ Table 301-4b. Mandatory attributes for the global variables defined in Table 3
 |/longitude |units |string |“degrees_east”
 | |standard_name |string |“longitude”
 |/altitude |units |string |“metres”
-| |standard_name |string |“height_above_reference_elliposid”
+| |standard_name |string |“height_above_reference_ellipsoid”
 |===
 
 *Table 301-5a. Metadata variables with global scope that are conditional or optional (attributes are listed in Table 301-5b)*
@@ -244,9 +244,9 @@ text, XML, JSON, etc.
 
 | |meters_between_gates |float |Range between consecutive gates in metres. Required if _spacing_is_constant_ is true.
 
-|/frequency |units |string |“s^–1^”
+|/sweep_<n>/frequency |units |string |“s^–1^”
 
-| |standard_name |string |
+| |standard_name |string |“radiation_frequency”
 |===
 
 *Table 301-7a. Mandatory metadata variables that shall be included in the sweep groups (Table 301-7b lists the attributes for these variables where defined)*
@@ -440,37 +440,37 @@ default.
 |Attribute name |Type |Convention |Value or description
 |_Undetect |same as field data |ODIM |Indicates an area (range bin) that has been radiated but has not produced a valid echo.
 
-|Sampling_ratio |float |CF/Radial |Number of samples for this field divided by _n_samples_.
+|sampling_ratio |float |CF/Radial |Number of samples for this field divided by _n_samples_.
 
-|Is_discrete |Boolean/ +
+|is_discrete |Boolean/ +
 string |CF/Radial |“true” or “false”. If “true”, this indicates that the field takes on discrete values, rather than floating point values. For example, if a
 hydrometeor type, this would be a discrete field.
 
-|Field_folds |Boolean/ +
+|field_folds |Boolean/ +
 string |CF/Radial |“true” or “false”. Used to indicate that a field is limited between a min and max value, and that it folds between the two extremes. This 
 fields as radial velocity and PhiDP.
 
-|Fold_limit_lower |float |CF/Radial |If _field_folds_ is “true”, this indicates the lower limit at which the field folds.
+|fold_limit_lower |float |CF/Radial |If _field_folds_ is “true”, this indicates the lower limit at which the field folds.
 
-|Fold_limit_upper |float |CF/Radial |If _field_folds_ is “true”, this indicates the upper limit at which the field folds.
+|fold_limit_upper |float |CF/Radial |If _field_folds_ is “true”, this indicates the upper limit at which the field folds.
 
-|Is_quality_field |Boolean/ +
+|is_quality_field |Boolean/ +
 string |CF/Radial |Set to “true” if this Dataset stores a quality control field.
 
-|Flag_values |same as field data |CF |Array of flag values. These values have special meaning, as documented in _flag_meanings_.
+|flag_values |same as field data |CF |Array of flag values. These values have special meaning, as documented in _flag_meanings_.
 
-|Flag_meanings |string |CF |Meaning of _flag_values_ or _flag_masks_.
+|flag_meanings |string |CF |Meaning of _flag_values_ or _flag_masks_.
 
-|Flag_masks |same as field data |CF |Valid bit-wise masks used in a flag field that is composed of bit-wise combinations of mask values. See
+|flag_masks |same as field data |CF |Valid bit-wise masks used in a flag field that is composed of bit-wise combinations of mask values. See
 _flag_meanings_.
 
-|Qualified_variables |string |CF/Radial |Applicable if _is_quality_field_ is “true”. Array list of variables that this variable
+|qualified_variables |string |CF/Radial |Applicable if _is_quality_field_ is “true”. Array list of variables that this variable
 qualifies. Every field variable in this list should list this variable in its _ancillary_variable_ attribute.
 
-|Ancillary_variables |string |CF |Array list of variables to which this variable is related. In particular, this is intended to list the variables that conta
+|ancillary_variables |string |CF |Array list of variables to which this variable is related. In particular, this is intended to list the variables that conta
 this field. In that case, the quality field will list this field in its _qualified_variable_ attribute.
 
-|Thresholding_xml |string |CF/Radial a| Thresholding details. Supplied if thresholding has been applied to the field.
+|thresholding_xml |string |CF/Radial a| Thresholding details. Supplied if thresholding has been applied to the field.
 
 This should be in self-descriptive XML. For example:
 
@@ -530,27 +530,27 @@ valid range bins
 [width="100%",cols="68%,11%,9%,12%",options="header",]
 |===
 |Variable path/name |Attribute |Kind |Value
-|/sweep_<n>/monitoring/radar_measured_transmit_power_h |units |string|dBm
+|/sweep_<n>/monitoring/radar_measured_transmit_power_h |units |string|“dBm”
 
-|/sweep_<n>/monitoring/radar_measured_transmit_power_v |units |string|dBm
+|/sweep_<n>/monitoring/radar_measured_transmit_power_v |units |string|“dBm”
 
-|/sweep_<n>/monitoring/radar_measured_sky_noise |units |string |dBm
+|/sweep_<n>/monitoring/radar_measured_sky_noise |units |string |“dBm”
 
-|/sweep_<n>/monitoring/radar_measured_cold_noise |units |string |dBm
+|/sweep_<n>/monitoring/radar_measured_cold_noise |units |string |“dBm”
 
-|/sweep_<n>/monitoring/radar_measured_hot_noise |units |string |dBm
+|/sweep_<n>/monitoring/radar_measured_hot_noise |units |string |“dBm”
 
-|/sweep_<n>/monitoring/phase_difference_transmit_hv |units |string |degrees
+|/sweep_<n>/monitoring/phase_difference_transmit_hv |units |string |“degrees”
 
-|/sweep_<n>/monitoring/antenna_pointing_accuracy_elev |units |string |degrees
+|/sweep_<n>/monitoring/antenna_pointing_accuracy_elev |units |string |“degrees”
 
-|/sweep_<n>/monitoring/antenna_pointing_accuracy_az |units |string |degrees
+|/sweep_<n>/monitoring/antenna_pointing_accuracy_az |units |string |“degrees”
 
-|/sweep_<n>/monitoring/calibration_offset_h |units |string |dB
+|/sweep_<n>/monitoring/calibration_offset_h |units |string |“dB”
 
-|/sweep_<n>/monitoring/calibration_offset_v |units |string |dB
+|/sweep_<n>/monitoring/calibration_offset_v |units |string |“dB”
 
-|/sweep_<n>/monitoring/zdr_offset |units |string |dB
+|/sweep_<n>/monitoring/zdr_offset |units |string |“dB”
 |===
 
 *Table 301-12a. List of optional/conditional metadata variables + that may be reported for the radar parameters group +(attributes are defined in Table 301-1
@@ -574,11 +574,11 @@ valid range bins
 [width="100%",cols="60%,15%,11%,14%",options="header",]
 |===
 |Variable path/name |Attribute |Kind |Value
-|/radar_parameters/antenna_gain_h |units |string |dBi
-|/radar_parameters/antenna_gain_v |units |string |dBi
-|/radar_parameters/beam_width_h |units |string |degrees
-|/radar_parameters/beam_width_v |units |string |degrees
-|/radar_parameters/receiver_bandwidth |units |string |s^–1^
+|/radar_parameters/antenna_gain_h |units |string |“dBi”
+|/radar_parameters/antenna_gain_v |units |string |“dBi”
+|/radar_parameters/beam_width_h |units |string |“degrees”
+|/radar_parameters/beam_width_v |units |string |“degrees”
+|/radar_parameters/receiver_bandwidth |units |string |“s^–1^”
 |===
 
 *Table 301-13a. List of optional/conditional metadata variables + that may be reported for the lidar parameters group + (attributes are defined in Table 301-
@@ -599,12 +599,12 @@ valid range bins
 [width="100%",cols="56%,15%,11%,18%",options="header",]
 |===
 |Variable path/name |Attribute |Kind |Value
-|/lidar_parameters/beam_divergence |units |string |milliradians
-|/lidar_parameters/field_of_view |units |string |milliradians
-|/lidar_parameters/aperture_diameter |units |string |cm
-|/lidar_parameters/aperture_efficency |units |string |percent
-|/lidar_parameters/peak_power |units |string |watts
-|/lidar_parameters/pulse_energy |units |string |joules
+|/lidar_parameters/beam_divergence |units |string |“milliradians”
+|/lidar_parameters/field_of_view |units |string |“milliradians”
+|/lidar_parameters/aperture_diameter |units |string |“cm”
+|/lidar_parameters/aperture_efficency |units |string |“percent”
+|/lidar_parameters/peak_power |units |string |“watts”
+|/lidar_parameters/pulse_energy |units |string |“joules”
 |===
 
 *Table 301-14a. List of optional/conditional metadata variables + that may be reported for the radar calibration group + (attributes are defined in Table 301
@@ -718,91 +718,91 @@ valid range bins
 |Variable path/name |Attribute |Kind |Value
 |/radar_calibration/time |units |string |“seconds since <reftime>” where <reftime> is an ISO8601 time string of the form YYYY-MM-DDThh:mm:ssZ
 
-|/radar_calibration/pulse_width |units |string |seconds
+|/radar_calibration/pulse_width |units |string |“seconds”
 
-|/radar_calibration/antenna_gain_h |units |string |dB
+|/radar_calibration/antenna_gain_h |units |string |“dB”
 
-|/radar_calibration/antenna_gain_v |units |string |dB
+|/radar_calibration/antenna_gain_v |units |string |“dB”
 
-|/radar_calibration/xmit_power_h |units |string |dBm
+|/radar_calibration/xmit_power_h |units |string |“dBm”
 
-|/radar_calibration/xmit_power_v |units |string |dBm
+|/radar_calibration/xmit_power_v |units |string |“dBm”
 
-|/radar_calibration/two_way_waveguide_loss_h |units |string |dB
+|/radar_calibration/two_way_waveguide_loss_h |units |string |“dB”
 
-|/radar_calibration/two_way_waveguide_loss_v |units |string |dB
+|/radar_calibration/two_way_waveguide_loss_v |units |string |“dB”
 
-|/radar_calibration/two_way_radome_loss_h |units |string |dB
+|/radar_calibration/two_way_radome_loss_h |units |string |“dB”
 
-|/radar_calibration/two_way_radome_loss_v |units |string |dB
+|/radar_calibration/two_way_radome_loss_v |units |string |“dB”
 
-|/radar_calibration/receiver_mismatch_loss |units |string |dB
+|/radar_calibration/receiver_mismatch_loss |units |string |“dB”
 
-|/radar_calibration/receiver_mismatch_loss_h |units |string |dB
+|/radar_calibration/receiver_mismatch_loss_h |units |string |“dB”
 
-|/radar_calibration/receiver_mismatch_loss_v |units |string |dB
+|/radar_calibration/receiver_mismatch_loss_v |units |string |“dB”
 
-|/radar_calibration/radar_constant_h |units |string |m/mW dB units
+|/radar_calibration/radar_constant_h |units |string |“m/mW dB units”
 
-|/radar_calibration/radar_constant_v |units |string |m/mW dB units
+|/radar_calibration/radar_constant_v |units |string |“m/mW dB units”
 
-|/radar_calibration/probert_jones_correction |units |string |dB
+|/radar_calibration/probert_jones_correction |units |string |“dB”
 
-|/radar_calibration/noise_hc |units |string |dBm
+|/radar_calibration/noise_hc |units |string |“dBm”
 
-|/radar_calibration/noise_vc |units |string |dBm
+|/radar_calibration/noise_vc |units |string |“dBm”
 
-|/radar_calibration/noise_hx |units |string |dBm
+|/radar_calibration/noise_hx |units |string |“dBm”
 
-|/radar_calibration/noise_vx |units |string |dBm
+|/radar_calibration/noise_vx |units |string |“dBm”
 
-|/radar_calibration/receiver_gain_hc |units |string |dB
+|/radar_calibration/receiver_gain_hc |units |string |“dB”
 
-|/radar_calibration/receiver_gain_vc |units |string |dB
+|/radar_calibration/receiver_gain_vc |units |string |“dB”
 
-|/radar_calibration/receiver_gain_hx |units |string |dB
+|/radar_calibration/receiver_gain_hx |units |string |“dB”
 
-|/radar_calibration/receiver_gain_vx |units |string |dB
+|/radar_calibration/receiver_gain_vx |units |string |“dB”
 
-|/radar_calibration/base_1km_hc |units |string |dBZ
+|/radar_calibration/base_1km_hc |units |string |“dBZ”
 
-|/radar_calibration/base_1km_vc |units |string |dBZ
+|/radar_calibration/base_1km_vc |units |string |“dBZ”
 
-|/radar_calibration/base_1km_hx |units |string |dBZ
+|/radar_calibration/base_1km_hx |units |string |“dBZ”
 
-|/radar_calibration/base_1km_vx |units |string |dBZ
+|/radar_calibration/base_1km_vx |units |string |“dBZ”
 
-|/radar_calibration/sun_power_hc |units |string |dBm
+|/radar_calibration/sun_power_hc |units |string |“dBm”
 
-|/radar_calibration/sun_power_vc |units |string |dBm
+|/radar_calibration/sun_power_vc |units |string |“dBm”
 
-|/radar_calibration/sun_power_hx |units |string |dBm
+|/radar_calibration/sun_power_hx |units |string |“dBm”
 
-|/radar_calibration/sun_power_vx |units |string |dBm
+|/radar_calibration/sun_power_vx |units |string |“dBm”
 
-|/radar_calibration/noise_source_power_h |units |string |dBm
+|/radar_calibration/noise_source_power_h |units |string |“dBm”
 
-|/radar_calibration/noise_source_power_v |units |string |dBm
+|/radar_calibration/noise_source_power_v |units |string |“dBm”
 
-|/radar_calibration/power_measure_loss_h |units |string |dB
+|/radar_calibration/power_measure_loss_h |units |string |“dB”
 
-|/radar_calibration/power_measure_loss_v |units |string |dB
+|/radar_calibration/power_measure_loss_v |units |string |“dB”
 
-|/radar_calibration/coupler_forward_loss_h |units |string |dB
+|/radar_calibration/coupler_forward_loss_h |units |string |“dB”
 
-|/radar_calibration/coupler_forward_loss_v |units |string |dB
+|/radar_calibration/coupler_forward_loss_v |units |string |“dB”
 
-|/radar_calibration/zdr_correction |units |string |dB
+|/radar_calibration/zdr_correction |units |string |“dB”
 
-|/radar_calibration/ldr_correction_h |units |string |dB
+|/radar_calibration/ldr_correction_h |units |string |“dB”
 
-|/radar_calibration/ldr_correction_v |units |string |dB
+|/radar_calibration/ldr_correction_v |units |string |“dB”
 
-|/radar_calibration/system_phidp |units |string |degrees
+|/radar_calibration/system_phidp |units |string |“degrees”
 
-|/radar_calibration/test_power_h |units |string |dBm
+|/radar_calibration/test_power_h |units |string |“dBm”
 
-|/radar_calibration/test_power_v |units |string |dBm
+|/radar_calibration/test_power_v |units |string |“dBm”
 |===
 
 *Table 301-15. Allowed values for enumerated string variables*
