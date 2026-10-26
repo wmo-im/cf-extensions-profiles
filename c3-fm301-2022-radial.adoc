@@ -1,4 +1,3 @@
-
 ## FM 301-2022 WMO-CF RADIAL
 
 ### Regulations
@@ -8,19 +7,18 @@
 |*301.1* |*Scope*
 |301.1.1 |This profile is for the representation of weather radar and lidar data in the native instrument-centric polar coordinates. Such data are the primary output of the radar/lidar signal processor known as “Level 2” data. This is the lowest level output commonly available from operational instruments and is well suited to data exchange.
 
-_Note: The structure of this profile is compatible with the data models for weather radar data exchange available at https://community.wmo.int/en/activity-areas/
-weather-radar-observations/radar-data-exchange._
+_Note: The structure of this profile is compatible with the data models for weather radar data exchange available at https://community.wmo.int/en/activity-areas/weather-radar-observations/radar-data-exchange._
 |===
 
 [width="100%",cols="15%,85%",grid=none,frame=none]
 |===
 |*301.2* |*Overview*
 |301.2.1 |Level 2 radar/lidar data may be conceptualized as a simple hierarchy of data objects where each object contains a collection of objects from the level below. These objects are:
-|301.2.1.1 |Volume - The top-level object for the profile. A volume is a collection of logically associated sweeps. Typically, these sweeps will represent a continuous or near-continuous series of observations acquired by the instrument during a single cycle of the scan schedule.
-|301.2.1.2 |Sweep - Represents a subset of the data in the volume over which certain fundamental conditions remain constant. A common example is for a sweep to contain the data observed during a single 360-degree scan at a fixed elevation angle.
-|301.2.1.3 |Ray - Represents a collection of data along a single direction of pointing from the instrument.
-|301.2.1.4 |Range Bin - Represents a collection of data within a ray thatare related to the same short window of range along the beam propagation path.
-|301.2.1.5 |Dataset - A measured or calculated quantity that is associated with a range bin. Each dataset will typically represent one of the measured radar moments such as reflectivity or Doppler velocity, but may also be used to store derived information such as quality control metrics.
+|301.2.1.1 |Volume – The top-level object for the profile. A volume is a collection of logically associated sweeps. Typically, these sweeps will represent a continuous or near-continuous series of observations acquired by the instrument during a single cycle of the scan schedule.
+|301.2.1.2 |Sweep – Represents a subset of the data in the volume over which certain fundamental conditions remain constant. A common example is for a sweep to contain the data observed during a single 360-degree scan at a fixed elevation angle.
+|301.2.1.3 |Ray – Represents a collection of data along a single direction of pointing from the instrument.
+|301.2.1.4 |Range Bin – Represents a collection of data within a ray that are related to the same short window of range along the beam propagation path.
+|301.2.1.5 |Dataset – A measured or calculated quantity that is associated with a range bin. Each dataset will typically represent one of the measured radar moments such as reflectivity or Doppler velocity, but may also be used to store derived information such as quality control metrics.
 |301.2.2 |Within a sweep all range bins contain the same collection of datasets, and all rays contain the same collection of range bins. This allows the lower three levels of the hierarchy to be collapsed into a collection of 2-D variables. Each variable stores a single dataset, with dimensions for ray and range bin.
 |301.2.3 |To facilitate representation of the hierarchical nature of the data, NetCDF groups are used. The global scope is used to store the volume object, a group is used for each sweep object, and a variable within each sweep group is used for each dataset. Coordinate variables and ancillary variables within the sweep groups provide metadata related to the ray and range bin objects.
 |===
@@ -31,7 +29,7 @@ weather-radar-observations/radar-data-exchange._
 |301.3.2 |_Attributes_
 |301.3.2.1 |Table 301-1 lists the global attributes that shall be included in addition to those defined under General Regulation WMO-CF.6.
 |301.3.2.2 |Table 301-2 lists the mandatory values that shall be used for the global attributes where defined.
-|301.3.2.3 |Table 301-3 lists additionally defined global attributes thatare optional.
+|301.3.2.3 |Table 301-3 lists additionally defined global attributes that are optional.
 |301.3.3 |_Ancillary variables_
 |301.3.3.1 |Table 301-4 lists the global variables that shall be included in the global root group.
 |301.3.3.2 |Table 301-5 lists the global variables that should be included in the global/root group.
@@ -52,15 +50,14 @@ weather-radar-observations/radar-data-exchange._
 |301.4.5 |_Ancillary variables_
 |301.4.5.1 |Table 301-7 lists the ancillary variables that shall be included in the sweep groups.
 |301.4.5.2 |Table 301-8 lists the ancillary variables that may be included in the sweep groups.
-|301.4.6 |Dataset variables (observed and quality data)_
+|301.4.6 |_Dataset variables (observed and quality data)_
 |301.4.6.1 |Dataset variables shall have dimensions (`+time+`, `+range+`).
 |301.4.6.2 |Dataset variables for well-known radar moments shall be named according to Table 301-9.
 |301.4.6.3 |The general regulations for variables (WMO-CF.5) shall apply, including the regulations on mandatory and optional attributes.
-|301.4.6.4 |The `+coordinates+` attribute shall be set to `+elevation azimuth range+`
+|301.4.6.4 |The `+coordinates+` attribute shall be set to “`+elevation azimuth range+`”
 |301.4.6.5 |Additional attributes for field/geophysical variables are defined in Table 301-10.
-|301.4.7   |_Monitoring subgroup_
-|301.4.7.1 |If monitoring data are available, a monitoring subgroup will be included in each relevant sweep group, to store the monitoring
-variables.
+|301.4.7 |_Monitoring subgroup_
+|301.4.7.1 |If monitoring data are available, a monitoring subgroup will be included in each relevant sweep group, to store the monitoring variables.
 |301.4.7.2 |The group shall be named `+monitoring+`.
 |301.4.7.3 |Table 301-11 lists the variables that may be included in this subgroup when present.
 |===
@@ -70,8 +67,7 @@ variables.
 |*301.5* |*Radar parameters group*
 |301.5.1 |The radar parameters group holds optional ancillary variables that are specific to the radar instrument.
 |301.5.2 |This group shall be located at the global scope and named `+radar_parameters+`.
-|301.5.3 |Table 301-12 lists the variables which may be included in this
-group.
+|301.5.3 |Table 301-12 lists the variables which may be included in this group.
 |301.5.4 |This group may be omitted from the file if no radar parameters are to be stored.
 |===
 
@@ -97,7 +93,7 @@ group.
 
 [width="100%",cols="15%,85%",grid=none,frame=none]
 |===
-|*301.8 |Lidar calibration group*
+|*301.8* |*Lidar calibration group*
 |301.8.1 |The lidar calibration group holds optional ancillary variables that are related to calibrations of the lidar instrument.
 |301.8.2 |This group shall be located at the global scope and named `+lidar_calibration+`.
 |301.8.3 |No ancillary variables have been defined for this group. It is reserved for future use.
@@ -118,8 +114,7 @@ group.
 |source |string |CF |See CF Conventions Appendix A
 |history |string |CF |See CF Conventions Appendix A
 |comment |string |CF |See CF Conventions Appendix A
-|platform_is_mobile |string |CF/Radial |“false” (mobile platforms are
-not supported by this profile)
+|platform_is_mobile |string |CF/Radial |“false” (mobile platforms are not supported by this profile)
 |===
 
 *Table 301-2. Mandatory values defined for the global attributes*
@@ -158,15 +153,14 @@ not supported by this profile)
 
 |/longitude | |double |Longitude of instrument using WGS84. For a mobile platform this is the longitude of the instrument at the start of the volume.
 
-|/altitude | |double |Altitude of instrument above mean sea level, using WGS84 and EGM2008 geoid corrections. For a scanning radar this is the centre of rota
-mobile platform this is the altitude at the start of the volume.
+|/altitude | |double |Altitude of instrument above mean sea level, using WGS84 and EGM2008 geoid corrections. For a scanning radar this is the centre of rotation of the antenna. For a mobile platform this is the altitude at the start of the volume.
 
 |/platform_type | |string |Type of platform upon which the radar system is mounted. Allowed values are listed in Table 15.
 
 |/instrument_type | |string |Type of instrument. Allowed values are listed in Table 15.
 |===
 
-Table 301-4b. Mandatory attributes for the global variables defined in Table 301-4a
+*Table 301-4b. Mandatory attributes for the global variables defined in Table 301-4a*
 
 [width="100%",cols="29%,19%,9%,43%",options="header",]
 |===
@@ -194,8 +188,7 @@ Table 301-4b. Mandatory attributes for the global variables defined in Table 3
 
 |/primary_axis | |string |Principle axis of rotation. Allowed values are specified in Table 301-15.
 
-|/status_str | |string |General-purpose string for storing any information that is not included in other parts of the data structure. Any text-based encoding
-text, XML, JSON, etc.
+|/status_str | |string |General-purpose string for storing any information that is not included in other parts of the data structure. Any text-based encoding may be used, including simple text, XML, JSON, etc.
 |===
 
 *Table 301-5b. Attributes for those variables listed in Table 301-5a*
@@ -214,7 +207,7 @@ text, XML, JSON, etc.
 |Variable path/name |Dimensions |Type |Comment
 |/sweep_<n>/time |(time) |double |Coordinate variable for the time dimension. Each value is the time at centre of each ray.
 
-|/sweep_<n>/range |(range) |float |Coordinate variable for the range dimension. Each value is range along beam propagation path to the centre of each range b
+|/sweep_<n>/range |(range) |float |Coordinate variable for the range dimension. Each value is range along beam propagation path to the centre of each range bin.
 
 |/sweep_<n>/frequency |(frequency) |float |List of operating frequencies in Hertz. In most cases only a single frequency is used.
 |===
@@ -260,8 +253,7 @@ text, XML, JSON, etc.
 
 |/sweep_<n>/follow_mode |none |string |Target following mode used to control antenna pointing. Allowed value are listed in Table 301-15.
 
-|/sweep_<n>/prt_mode |none |string |Pulsing mode used for sweep. Standard allowed values are listed in Table 301-15. More complicated pulsing schemes may als
-sequence of “H” and “V” characters. For example “HHVVH”.
+|/sweep_<n>/prt_mode |none |string |Pulsing mode used for sweep. Standard allowed values are listed in Table 301-15. More complicated pulsing schemes may also be represented using a sequence of “H” and “V” characters. For example “HHVVH”.
 
 |/sweep_<n>/fixed_angle |none |float |Target angle for the sweep. In most sweep modes this is the elevation angle, for RHI mode this is the azimuth angle.
 
@@ -270,7 +262,7 @@ sequence of “H” and “V” characters. For example “HHVVH”.
 |/sweep_<n>/elevation |(time) |float |Elevation of the antenna relative to true north at the centre of dwell for each ray of the sweep.
 |===
 
-Table 301-7b. Mandatory attributes defined for the sweep group metadata variables listed in Table 301-7a
+*Table 301-7b. Mandatory attributes defined for the sweep group metadata variables listed in Table 301-7a*
 
 [width="100%",cols="31%,19%,9%,41%",options="header",]
 |===
@@ -293,45 +285,37 @@ Table 301-7b. Mandatory attributes defined for the sweep group metadata variable
 |Variable path/name |Dimensions |Kind |Comment
 |/sweep_<n>/polarization_mode |none |string |Polarization mode used during sweep. Allowed values are listed in Table 301-15.
 
-|/sweep_<n>/polarization_sequence |(prt) |string |Polarization sequence for each PRT that is used. Only applicable if _prt_mode_ is “hybrid”. As an example, 
-‘H’,‘V’,‘V’,‘H’] for HHVVH pulsing.
+|/sweep_<n>/polarization_sequence |(prt) |string |Polarization sequence for each PRT that is used. Only applicable if _prt_mode_ is “hybrid”. As an example, the form of it would be [‘H’,‘H’,‘V’,‘V’,‘H’] for HHVVH pulsing.
 
-|/sweep_<n>/rays_are_indexed |none |Boolean/ string |Indicates whether or not the ray angles (elevation in RHI sweep mode, azimuth in other modes) are indexe
+|/sweep_<n>/rays_are_indexed |none |Boolean/ string |Indicates whether or not the ray angles (elevation in RHI sweep mode, azimuth in other modes) are indexed to a regular grid.
 
-|/sweep_<n>/rays_angle_resolution |none |float |If _rays_are_indexed_ is true, this is the resolution of the angular grid (that is, the delta angle between s
+|/sweep_<n>/rays_angle_resolution |none |float |If _rays_are_indexed_ is true, this is the resolution of the angular grid (that is, the delta angle between successive rays).
 
-|/sweep_<n>/qc_procedures |none |string |General-purpose string for storing any information that describes the QC procedures performed on this sweep. Any tex
-including simple text, XML, JSON, etc.
+|/sweep_<n>/qc_procedures |none |string |General-purpose string for storing any information that describes the QC procedures performed on this sweep. Any text-based encoding may be used, including simple text, XML, JSON, etc.
 
-|/sweep_<n>/target_scan_rate |none |float |Intended scan rate for this sweep. The actual scan rate is stored in scan_rate. This variable is optional. Omit if
+|/sweep_<n>/target_scan_rate |none |float |Intended scan rate for this sweep. The actual scan rate is stored in scan_rate. This variable is optional. Omit if not available.
 
-|/sweep_<n>/scan_rate |(time) |float |Actual antenna scan rate. Set to negative if counter-clockwise in azimuth or decreasing in elevation. Positive otherwis
+|/sweep_<n>/scan_rate |(time) |float |Actual antenna scan rate. Set to negative if counter-clockwise in azimuth or decreasing in elevation. Positive otherwise.
 
-|/sweep_<n>/antenna_transition |(time) |byte |1 if antenna is in transition (that is, between sweeps), 0 if not. If transition rays are not included in the f
-omitted.
+|/sweep_<n>/antenna_transition |(time) |byte |1 if antenna is in transition (that is, between sweeps), 0 if not. If transition rays are not included in the file this variable may be omitted.
 
 |/sweep_<n>/pulse_width |(time) |float |Length of transmitted pulse.
 
-|/sweep_<n>/calib_index |(time) |int |Index for the radar calibration that applies to this pulse width. The value must match one of the calibration indexes l
-calib_index_.
+|/sweep_<n>/calib_index |(time) |int |Index for the radar calibration that applies to this pulse width. The value must match one of the calibration indexes listed by _/radar_calibration/calib_index_.
 
-|/sweep_<n>/rx_range_resolution |(time) |float |Resolution of the raw receiver samples if different to ‘meters_between_gates’. Raw data may be resampled befo
+|/sweep_<n>/rx_range_resolution |(time) |float |Resolution of the raw receiver samples if different to ‘meters_between_gates’. Raw data may be resampled before data storage.
 
 |/sweep_<n>/prt |(time) |float |Pulse repetition time. For staggered prt, also see _prt_ratio_.
 
 |/sweep_<n>/prt_ratio |(time) |float |Ratio of prt/prt2. For dual/staggered prt mode.
 
-|/sweep_<n>/prt_sequence |(time, prt) |float |Sequence of prts used. Optional for fixed, staggered and dual, which can make use of _prt_ and _prt_ratio_. Req
-pulsing schemes.
+|/sweep_<n>/prt_sequence |(time, prt) |float |Sequence of prts used. Optional for fixed, staggered and dual, which can make use of _prt_ and _prt_ratio_. Required for more complicated pulsing schemes.
 
-|/sweep_<n>/_velocity |(time) |float |Unambiguous velocity. This is the effective Nyquist velocity after unfolding. See also the field-specific attributes _f
-_fold_limit_upper_.
+|/sweep_<n>/_velocity |(time) |float |Unambiguous velocity. This is the effective Nyquist velocity after unfolding. See also the field-specific attributes _fold_limit_lower_ and _fold_limit_upper_.
 
 |/sweep_<n>/unambiguous_range |(time) |float |Unambiguous range.
 
-|/sweep_<n>/n_samples |(time) |int |Maximum number of samples used to compute moments. The actual number of samples used may vary from field to field. This v
-number of samples used for any field. The Dataset attribute _sampling_ratio_ is the actual number of samples used for a given field, divided by _n_samples_. 
-default.
+|/sweep_<n>/n_samples |(time) |int |Maximum number of samples used to compute moments. The actual number of samples used may vary from field to field. This value refers to the maximum number of samples used for any field. The Dataset attribute _sampling_ratio_ is the actual number of samples used for a given field, divided by _n_samples_. It will generally be 1.0, the default.
 |===
 
 *Table 301-8b. Attributes for the optional sweep group metadata variables defined in Table 301-8a*
@@ -359,17 +343,17 @@ default.
 
 |/sweep_<n>/DBZV |radar_equivalent_reflectivity_factor_v |Equivalent reflectivity factor V
 
-|/sweep_<n>/ZH |radar_linear_equivalent_reflectivity_ + factor_h |Linear equivalent reflectivity factor H
+|/sweep_<n>/ZH |radar_linear_equivalent_reflectivity_factor_h |Linear equivalent reflectivity factor H
 
-|/sweep_<n>/ZV |radar_linear_equivalent_reflectivity_ + factor_v |Linear equivalent reflectivity factor V
+|/sweep_<n>/ZV |radar_linear_equivalent_reflectivity_factor_v |Linear equivalent reflectivity factor V
 
 |/sweep_<n>/DBTH |radar_equivalent_reflectivity_factor_h |Total power H (uncorrected reflectivity)
 
 |/sweep_<n>/DBTV |radar_equivalent_reflectivity_factor_v |Total power V (uncorrected reflectivity)
 
-|/sweep_<n>/TH |radar_linear_equivalent_reflectivity_ + factor_h |Linear total power H (uncorrected reflectivity)
+|/sweep_<n>/TH |radar_linear_equivalent_reflectivity_factor_h |Linear total power H (uncorrected reflectivity)
 
-|/sweep_<n>/TV |radar_linear_equivalent_reflectivity_ + factor_v |Linear total power V (uncorrected reflectivity)
+|/sweep_<n>/TV |radar_linear_equivalent_reflectivity_factor_v |Linear total power V (uncorrected reflectivity)
 
 |/sweep_<n>/VRADH |radial_velocity_of_scatterers_away_from_instrument_h |Radial velocity of scatterers away from instrument H
 
@@ -403,24 +387,21 @@ default.
 
 |/sweep_<n>/DBMHC |radar_received_signal_power_copolar_h |Log power co-polar H
 
-|/sweep_<n>/DBMHX |radar_received_signal_power_ + crosspolar_h |Log power cross-polar H
+|/sweep_<n>/DBMHX |radar_received_signal_power_crosspolar_h |Log power cross-polar H
 
 |/sweep_<n>/DBMVC |radar_received_signal_power_copolar_v |Log power co-polar V
 
-|/sweep_<n>/DBMVX |radar_received_signal_power_ + crosspolar_v |Log power cross-polar V
+|/sweep_<n>/DBMVX |radar_received_signal_power_crosspolar_v |Log power cross-polar V
 
 |/sweep_<n>/SNR |radar_signal_to_noise_ratio |Signal-to-noise ratio
 
-|/sweep_<n>/SNRHC |radar_signal_to_noise_ratio_copolar_h
-|Signal-to-noise ratio + co-polar H
+|/sweep_<n>/SNRHC |radar_signal_to_noise_ratio_copolar_h |Signal-to-noise ratio co-polar H
 
-|/sweep_<n>/SNRHX |radar_signal_to_noise_ratio_crosspolar_h
-|Signal-to-noise ratio + cross-polar H
+|/sweep_<n>/SNRHX |radar_signal_to_noise_ratio_crosspolar_h |Signal-to-noise ratio cross-polar H
 
-|/sweep_<n>/SNRVC |radar_signal_to_noise_ratio_copolar_v
-|Signal-to-noise ratio + co-polar V
+|/sweep_<n>/SNRVC |radar_signal_to_noise_ratio_copolar_v |Signal-to-noise ratio co-polar V
 
-|/sweep_<n>/SNRVX |radar_signal_to_noise_ratio_crosspolar_v |Signal to noise ratio + cross-polar V
+|/sweep_<n>/SNRVX |radar_signal_to_noise_ratio_crosspolar_v |Signal to noise ratio cross-polar V
 
 |/sweep_<n>/NCP |radar_normalized_coherent_power |Normalized coherent power
 
@@ -442,33 +423,25 @@ default.
 
 |Sampling_ratio |float |CF/Radial |Number of samples for this field divided by _n_samples_.
 
-|Is_discrete |Boolean/ +
-string |CF/Radial |“true” or “false”. If “true”, this indicates that the field takes on discrete values, rather than floating point values. For example, if a
-hydrometeor type, this would be a discrete field.
+|Is_discrete |Boolean/ string |CF/Radial |“true” or “false”. If “true”, this indicates that the field takes on discrete values, rather than floating point values. For example, if a field is used to indicate the hydrometeor type, this would be a discrete field.
 
-|Field_folds |Boolean/ +
-string |CF/Radial |“true” or “false”. Used to indicate that a field is limited between a min and max value, and that it folds between the two extremes. This 
-fields as radial velocity and PhiDP.
+|Field_folds |Boolean/ string |CF/Radial |“true” or “false”. Used to indicate that a field is limited between a min and max value, and that it folds between the two extremes. This typically applies to such fields as radial velocity and PhiDP.
 
 |Fold_limit_lower |float |CF/Radial |If _field_folds_ is “true”, this indicates the lower limit at which the field folds.
 
 |Fold_limit_upper |float |CF/Radial |If _field_folds_ is “true”, this indicates the upper limit at which the field folds.
 
-|Is_quality_field |Boolean/ +
-string |CF/Radial |Set to “true” if this Dataset stores a quality control field.
+|Is_quality_field |Boolean/ string |CF/Radial |Set to “true” if this Dataset stores a quality control field.
 
 |Flag_values |same as field data |CF |Array of flag values. These values have special meaning, as documented in _flag_meanings_.
 
 |Flag_meanings |string |CF |Meaning of _flag_values_ or _flag_masks_.
 
-|Flag_masks |same as field data |CF |Valid bit-wise masks used in a flag field that is composed of bit-wise combinations of mask values. See
-_flag_meanings_.
+|Flag_masks |same as field data |CF |Valid bit-wise masks used in a flag field that is composed of bit-wise combinations of mask values. See _flag_meanings_.
 
-|Qualified_variables |string |CF/Radial |Applicable if _is_quality_field_ is “true”. Array list of variables that this variable
-qualifies. Every field variable in this list should list this variable in its _ancillary_variable_ attribute.
+|Qualified_variables |string |CF/Radial |Applicable if _is_quality_field_ is “true”. Array list of variables that this variable qualifies. Every field variable in this list should list this variable in its _ancillary_variable_ attribute.
 
-|Ancillary_variables |string |CF |Array list of variables to which this variable is related. In particular, this is intended to list the variables that conta
-this field. In that case, the quality field will list this field in its _qualified_variable_ attribute.
+|Ancillary_variables |string |CF |Array list of variables to which this variable is related. In particular, this is intended to list the variables that contain quality information about this field. In that case, the quality field will list this field in its _qualified_variable_ attribute.
 
 |Thresholding_xml |string |CF/Radial a| Thresholding details. Supplied if thresholding has been applied to the field.
 
@@ -501,22 +474,21 @@ _</thresholding>_
 [width="99%",cols="58%,17%,7%,18%",options="header",]
 |===
 |Variable path/name |Dimensions |Kind |Comment
-|/sweep_<n>/monitoring/radar_measured_transmit + _power_h |(time) |float |Measured transmit power H polarization
+|/sweep_<n>/monitoring/radar_measured_transmit_power_h |(time) |float |Measured transmit power H polarization
 
-|/sweep_<n>/monitoring/radar_measured_transmit + _power_v |(time) |float |Measured transmit power V polarization
+|/sweep_<n>/monitoring/radar_measured_transmit_power_v |(time) |float |Measured transmit power V polarization
 
 |/sweep_<n>/monitoring/radar_measured_sky_noise |(time) |float |Noise measured at the receiver when connected to the antenna with no noise source connected
 
 |/sweep_<n>/monitoring/radar_measured_cold_noise |(time) |float |Noise measured at the receiver when connected to the noise source, but it is not enabled
 
-|/sweep_<n>/monitoring/radar_measured_hot_noise |(time) |float |Noise measured at the receiver when it is connected to the noise source and the noise source 
+|/sweep_<n>/monitoring/radar_measured_hot_noise |(time) |float |Noise measured at the receiver when it is connected to the noise source and the noise source is on
 
-|/sweep_<n>/monitoring/phase_difference_ + transmit_hv |(time) |float |Phase difference between transmitted horizontally- and vertically-polarized signals as
-valid range bins
+|/sweep_<n>/monitoring/phase_difference_transmit_hv |(time) |float |Phase difference between transmitted horizontally- and vertically-polarized signals as determined from the first valid range bins
 
-|/sweep_<n>/monitoring/antenna_pointing_ + accuracy_elev |(time) |float |Antenna-pointing accuracy in elevation
+|/sweep_<n>/monitoring/antenna_pointing_accuracy_elev |(time) |float |Antenna-pointing accuracy in elevation
 
-|/sweep_<n>/monitoring/antenna_pointing_ + accuracy_az |(time) |float |Antenna-pointing accuracy in azimuth
+|/sweep_<n>/monitoring/antenna_pointing_accuracy_az |(time) |float |Antenna-pointing accuracy in azimuth
 
 |/sweep_<n>/monitoring/calibration_offset_h |(time) |float |Calibration offset for the horizontal channel
 
@@ -530,9 +502,9 @@ valid range bins
 [width="100%",cols="68%,11%,9%,12%",options="header",]
 |===
 |Variable path/name |Attribute |Kind |Value
-|/sweep_<n>/monitoring/radar_measured_transmit_power_h |units |string|dBm
+|/sweep_<n>/monitoring/radar_measured_transmit_power_h |units |string |dBm
 
-|/sweep_<n>/monitoring/radar_measured_transmit_power_v |units |string|dBm
+|/sweep_<n>/monitoring/radar_measured_transmit_power_v |units |string |dBm
 
 |/sweep_<n>/monitoring/radar_measured_sky_noise |units |string |dBm
 
@@ -553,18 +525,18 @@ valid range bins
 |/sweep_<n>/monitoring/zdr_offset |units |string |dB
 |===
 
-*Table 301-12a. List of optional/conditional metadata variables + that may be reported for the radar parameters group +(attributes are defined in Table 301-1
+*Table 301-12a. List of optional/conditional metadata variables that may be reported for the radar parameters group (attributes are defined in Table 301-12b)*
 
 [width="100%",cols="46%,14%,8%,32%",options="header",]
 |===
 |Variable path/name |Dimensions |Kind |Comment
-|/radar_parameters/antenna_gain_h |none |float |Nominal antenna gain, +H polarization
+|/radar_parameters/antenna_gain_h |none |float |Nominal antenna gain, H polarization
 
-|/radar_parameters/antenna_gain_v |none |float |Nominal antenna gain, +V polarization
+|/radar_parameters/antenna_gain_v |none |float |Nominal antenna gain, V polarization
 
-|/radar_parameters/beam_width_h |none |float |Antenna beam width, +H polarization
+|/radar_parameters/beam_width_h |none |float |Antenna beam width, H polarization
 
-|/radar_parameters/beam_width_v |none |float |Antenna beam width, +V polarization
+|/radar_parameters/beam_width_v |none |float |Antenna beam width, V polarization
 
 |/radar_parameters/receiver_bandwidth |none |float |Bandwidth of radar receiver
 |===
@@ -581,7 +553,7 @@ valid range bins
 |/radar_parameters/receiver_bandwidth |units |string |s^–1^
 |===
 
-*Table 301-13a. List of optional/conditional metadata variables + that may be reported for the lidar parameters group + (attributes are defined in Table 301-
+*Table 301-13a. List of optional/conditional metadata variables that may be reported for the lidar parameters group (attributes are defined in Table 301-13b)*
 
 [width="100%",cols="54%,18%,8%,20%",options="header",]
 |===
@@ -607,7 +579,7 @@ valid range bins
 |/lidar_parameters/pulse_energy |units |string |joules
 |===
 
-*Table 301-14a. List of optional/conditional metadata variables + that may be reported for the radar calibration group + (attributes are defined in Table 301
+*Table 301-14a. List of optional/conditional metadata variables that may be reported for the radar calibration group (attributes are defined in Table 301-14b)*
 
 [width="100%",cols="49%,13%,9%,29%",options="header",]
 |===
@@ -646,7 +618,7 @@ valid range bins
 
 |/radar_calibration/probert_jones_correction |(calib) |float |Probert-Jones antenna correction factor
 
-|/radar_calibration/dielectric_factor_used |(calib) |float |The |K2| in the radar equation
+|/radar_calibration/dielectric_factor_used |(calib) |float |The \|K2\| in the radar equation
 
 |/radar_calibration/noise_hc |(calib) |float |Measured noise level, H co-pol channel
 
@@ -674,11 +646,11 @@ valid range bins
 
 |/radar_calibration/sun_power_hc |(calib) |float |Calibrated sun power, H co-pol channel
 
-|/radar_calibration/sun_power_vc |(calib) |float |Calibrated sun power,V co-pol channel
+|/radar_calibration/sun_power_vc |(calib) |float |Calibrated sun power, V co-pol channel
 
-|/radar_calibration/sun_power_hx |(calib) |float |Calibrated sun power,H cross-pol channel
+|/radar_calibration/sun_power_hx |(calib) |float |Calibrated sun power, H cross-pol channel
 
-|/radar_calibration/sun_power_vx |(calib) |float |Calibrated sun power,V cross-pol channel
+|/radar_calibration/sun_power_vx |(calib) |float |Calibrated sun power, V cross-pol channel
 
 |/radar_calibration/noise_source_power_h |(calib) |float |Noise source power, H channel
 
@@ -692,11 +664,11 @@ valid range bins
 
 |/radar_calibration/coupler_forward_loss_v |(calib) |float |Coupler loss into waveguide, V channel
 
-|/radar_calibration/zdr_correction |(calib) |float |corrected = + measured + correction
+|/radar_calibration/zdr_correction |(calib) |float |corrected = measured + correction
 
-|/radar_calibration/ldr_correction_h |(calib) |float |corrected = + measured + correction
+|/radar_calibration/ldr_correction_h |(calib) |float |corrected = measured + correction
 
-|/radar_calibration/ldr_correction_v |(calib) |float |corrected = + measured + correction
+|/radar_calibration/ldr_correction_v |(calib) |float |corrected = measured + correction
 
 |/radar_calibration/system_phidp |(calib) |float |System PhiDP, as seen in drizzle close to radar
 
@@ -706,8 +678,10 @@ valid range bins
 
 |/radar_calibration/receiver_slope_hc |(calib) |float |Computed receiver slope, ideally 1.0, H co-pol channel
 
-|/radar_calibration/receiver_slope_vc |(calib) |float |Computed receiver slope, ideally 1.0, V co-pol channel
-|/radar_calibration/receiver_slope_hx |(calib) |float |Computed receiverslope, ideally 1.0, H cross-pol channel  
+|/radar_calibration/receiver_slope_vc |(calib) |float |Computed receiver slope, ideally 1.0, V co-pol channel
+
+|/radar_calibration/receiver_slope_hx |(calib) |float |Computed receiver slope, ideally 1.0, H cross-pol channel
+
 |/radar_calibration/receiver_slope_vx |(calib) |float |Computed receiver slope, ideally 1.0, V cross-pol channel
 |===
 
@@ -861,710 +835,3 @@ valid range bins
 | |circular
 |===
 ***
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
